@@ -1,6 +1,16 @@
 ---
 # main tasks for rh_ftp_repo
 
+- name: check for {{ iso_device }}
+  stat:
+    path: "{{ iso_device }}"
+  register: device_to_use
+  
+- name: fail if {{ iso_device }} does not exist
+  fail:
+    msg: "The device {{ iso_device }} does not exist"
+  when: not device_to_use.stat.exists
+
 - name: install packages
   package:
     name: "{{ rp_packages | join(',') }}"
@@ -17,7 +27,7 @@
   lineinfile:
     path: /etc/vsftpd/vsftpd.conf
     regexp: '^anonymous_.+$'
-    line: 'anonymous_enable=YES
+    line: 'anonymous_enable=YES'
     state: present
   notify: restart vsftpd
 
@@ -31,4 +41,7 @@
   mount:
     path: "{{ rp_path }}"
     src: "{{ iso_device }}"
+    fstype: iso9660
+    opts: defaults
+    state: mounted
   
