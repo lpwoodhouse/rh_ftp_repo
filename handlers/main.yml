@@ -1,2 +1,7 @@
 ---
-# handlers for <role name>
+# handlers for rh_ftp_repo
+
+- name: restart vsftpd
+  service:
+    name: vsftpd
+    state: restarted
