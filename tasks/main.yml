@@ -1,2 +1,34 @@
 ---
-# main tasks for <role name>
+# main tasks for rh_ftp_repo
+
+- name: install packages
+  package:
+    name: "{{ rp_packages | join(',') }}"
+    state: latest
+
+- name: enable services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop: "{{ rp_services }}"
+
+- name: grant ftp anonymous user access
+  lineinfile:
+    path: /etc/vsftpd/vsftpd.conf
+    regexp: '^anonymous_.+$'
+    line: 'anonymous_enable=YES
+    state: present
+  notify: restart vsftpd
+
+- name: set ftpd_full_access selinux bool
+  seboolean:
+    name: ftpd_full_access
+    state: on
+    persistent: true
+
+- name: mount repository
+  mount:
+    path: "{{ rp_path }}"
+    src: "{{ iso_device }}"
+  
