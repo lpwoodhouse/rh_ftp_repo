@@ -1,8 +1,6 @@
-# Ansible Role: <role name>
+# Ansible Role: rh_ftp_repo
 
-### <sub-heading>
-
-Description here
+Creates a package repository from a RHEL installation .iso and makes the repository accessible to clients via ftp.
 
 ## Requirements
 
@@ -12,8 +10,7 @@ None
 
 Available variables are listed below, along with default values (see ```defaults/main.yml```)
 ```shell
-variable1:
-variable2:
+iso_device: /dev/sr0
 ...etc
 ```
 ## Dependencies
@@ -22,14 +19,16 @@ None
 
 ## Example Playbook
 ```yaml
-    - hosts: all
+    - hosts: localhost
+      vars:
+        - iso_device: /dev/sr0
       roles:
-        - <role name>
+        - rh_ftp_repo
 ```
 
 ## License
 
-GNU General Public Licence v3.0
+MIT
 
 ## Author Information
 
