@@ -1,2 +1,12 @@
 ---
-# static variables required for <role name>
+# static variables required for rh_ftp_repo
+
+rp_packages:
+  - vsftpd
+  - firewalld
+
+rp_services:
+  - vsftpd
+  - firewalld
+
+rp_path: /var/ftp/repo
