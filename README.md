@@ -11,7 +11,6 @@ None
 Available variables are listed below, along with default values (see ```defaults/main.yml```)
 ```shell
 iso_device: /dev/sr0
-...etc
 ```
 ## Dependencies
 
